@@ -158,20 +158,42 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
             'cooking_time'
         ]
 
-    def validate(self, data):
+    def validate_unique(self, values):
+        values_list = list()
+        for value in values:
+            if value in values_list:
+                return True
+            values_list.append(value)
+        return False
+
+    def validate_ingredients(self, data):
+        ingredients = data
+        if not ingredients:
+            raise serializers.ValidationError({
+                'ingredients': 'Нужен хотя бы один ингредиент!'
+            })
         ingredients = self.initial_data.get('ingredients')
-        list = []
-        for i in ingredients:
-            amount = i['amount']
-            if int(amount) < 1:
+        if self.validate_unique(ingredients):
+            raise serializers.ValidationError({
+                   'ingredient': 'Ингредиенты должны быть уникальными!'
+            })
+        for item in ingredients:
+            if int(item['amount']) <= 0:
                 raise serializers.ValidationError({
                    'amount': 'Количество ингредиента должно быть больше 0!'
                 })
-            if i['id'] in list:
-                raise serializers.ValidationError({
-                   'ingredient': 'Ингредиенты должны быть уникальными!'
-                })
-            list.append(i['id'])
+        return data
+
+    def validate_tags(self, data):
+        tags = data
+        if not tags:
+            raise serializers.ValidationError({
+                'tags': 'Нужно выбрать хотя бы один тег!'
+            })
+        if self.validate_unique(tags):
+            raise serializers.ValidationError({
+                'tags': 'Теги должны быть уникальными!'
+            })
         return data
 
     def create_ingredients(self, ingredients, recipe):
@@ -294,6 +316,8 @@ class ShowSubscriptionsSerializer(serializers.ModelSerializer):
         limit = request.query_params.get('recipes_limit')
         if limit:
             recipes = recipes[:int(limit)]
+        else:
+            recipes = recipes.all()
         return ShowFavoriteSerializer(
             recipes, many=True, context={'request': request}).data
 

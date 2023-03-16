@@ -13,7 +13,7 @@ class Ingredient(models.Model):
         'Название ингредиента',
         max_length=200
     )
-    measurement_unit = models.CharField('Единицы измерения', max_length=200)
+    measurement_unit = models.CharField('Единицы измерения', max_length=10)
 
     class Meta:
         ordering = ['name']
@@ -25,6 +25,9 @@ class Ingredient(models.Model):
                 name='ingredient_name_unit_unique'
             )
         ]
+
+    def __str__(self):
+        return f'{self.name}, {self.measurement_unit}.'
 
 
 class Tag(models.Model):
@@ -105,7 +108,7 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Ингредиент'
     )
-    amount = models.IntegerField(
+    amount = models.PositiveIntegerField(
         'Количество',
         validators=[MinValueValidator(1)]
     )
