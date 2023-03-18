@@ -2,7 +2,11 @@
 
 ## Описание проекта:  
 
-url: 158.160.16.23  
+url:  
+http://158.160.16.23/  
+http://158.160.16.23/redoc/  
+http://158.160.16.23/admin/  
+
 Временный логин и пароль:  
 email: admin@admin.ru  
 password: 12345
@@ -77,11 +81,11 @@ DokerHub:
 Клонировать репозиторий и перейти в него в командной строке:  
 
 ```
-https://github.com/shmyrev/yamdb_final.git
+https://github.com/shmyrev/foodgram-project-react.git
 ```
 
 ```
-cd yamdb_final/
+cd foodgram-project-react/
 ```
 
 Переходим в папку с файлом docker-compose.yaml:
@@ -125,32 +129,32 @@ docker-compose up -d --build
 Запускаем миграцмм:  
 
 ```
-docker-compose exec web python manage.py makemigrations  
-docker-compose exec web python manage.py migrate
+sudo docker-compose exec foodbackend python manage.py makemigrations  
+sudo docker-compose exec foodbackend python manage.py migrate
 ```
 
 Создаем суперпользователя:  
 
 ```
-docker-compose exec web python manage.py createsuperuser
+sudo docker-compose exec foodbackend python manage.py createsuperuser
 ```
 
 Создаем статику:  
 
 ```
-docker-compose exec web python manage.py collectstatic --no-input
+sudo docker-compose exec foodbackend python manage.py collectstatic --no-input
 ```
 
 Заполнение базы тестовыми данными:  
 
 ```
-docker-compose exec web python manage.py add_data  
+sudo docker-compose exec foodbackend python manage.py add_data  
 ```
 
 Создаем дамп базы данных:  
 
 ```
-docker-compose exec web python manage.py dumpdata > fixtures.json
+sudo docker-compose exec foodbackend python manage.py dumpdata > fixtures.json
 ```
 
 Останавть контейнер:
