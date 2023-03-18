@@ -1,5 +1,4 @@
 import os
-# import socket
 
 from dotenv import load_dotenv
 
@@ -10,15 +9,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('TOKEN', default='54321')
 
-# if socket.gethostname() != 'localhost':
-#     DEBUG = False
-# else:
-#     DEBUG = True
+DEBUG = False
 
-DEBUG = True
-
-# ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', default='localhost')]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', default='localhost')]
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -89,13 +82,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', default=5432)
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 
 # Password validation
