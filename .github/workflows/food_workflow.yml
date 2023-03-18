@@ -39,6 +39,8 @@ jobs:
           push: true
           context: ./backend/foodgram/
           tags: shmyrev/foodbackend:latest
+          context: ./frontend/
+          tags: shmyrev/foodfrontend:latest
 
   deploy:
     runs-on: ubuntu-latest
