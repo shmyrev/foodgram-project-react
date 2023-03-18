@@ -9,8 +9,9 @@ services:
       - ./.env
       
   backend:
-    container_name: backend
+    container_name: foodbackend
     image: shmyrev/foodbackend:latest
+    restart: always
     volumes:
       - static_value:/app/static/
       - media_value:/app/media/
@@ -20,8 +21,9 @@ services:
       - ./.env
 
   frontend:
-    container_name: frontend
+    container_name: foodfrontend
     image: shmyrev/foodfrontend:latest
+    restart: always
     volumes:
       - ../frontend/:/app/result_build/
 
